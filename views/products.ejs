@@ -52,6 +52,16 @@
             color: #17a2b8;
         }
 
+        .btn-cart {
+            background-color: #17294d;
+            color: #fff;
+            transition: ease-in-out 0.3s;
+        }
+
+        .btn-cart:hover {
+            background-color: #101c34;
+        }
+
         .custom-alert {
             max-width: 500px;
             margin: 10px auto;
@@ -82,7 +92,7 @@
                                         <p>
                                             <%= menu.deskripsi %>
                                         </p>
-                                        <button class="btn btn-primary" onclick="addToCart('<%= menu.nama_menu %>')">Add
+                                        <button class="btn btn-cart" onclick="addToCart('<%= menu.nama_menu %>')">Add
                                             to Cart</button>
                     </div>
                 </div>

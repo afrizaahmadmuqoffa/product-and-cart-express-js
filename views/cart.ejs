@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Shop</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+
+    <style>
+        body {
+            background: linear-gradient(to right, #141e30, #243b55);
+            color: #fff;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 15px;
+        }
+
+
+        .container h2 {
+            text-align: center;
+        }
+
+        .menu-item {
+            padding: 20px;
+        }
+
+        .list-group-item {
+            display: flex;
+            margin-bottom: 20px;
+            background-color: #2c3e50;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .list-group-item p {
+            color: white;
+        }
+
+        .list-group-item h5 {
+            color: #17a2b8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="mb-4">Cart Shop</h2>
+
+        <ul id="cartItemList" class="list-group">
+            <li class="list-group-item">
+                <div>
+                    <h5 class="mb-1">Product Name 1</h5>
+                    <p class="mb-1">Jumlah: 2</p>
+                    <p class="mb-1">Harga: Rp. 20.000 / jml</p>
+                </div>
+                <span class="btn btn-danger">Remove</span>
+            </li>
+        </ul>
+        <ul id="cartItemList" class="list-group">
+            <li class="list-group-item">
+                <div>
+                    <h5 class="mb-1">Product Name 1</h5>
+                    <p class="mb-1">Jumlah: 2</p>
+                    <p class="mb-1">Harga: Rp. 20.000 / jml</p>
+                </div>
+                <span class="btn btn-danger">Remove</span>
+            </li>
+        </ul>
+
+        <a href="/" class="btn btn-primary mt-5">Back Home</a>
+    </div>
+
+    <script src="/js/bootstrap.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+<!-- products.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <title>Menu Products</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #141e30, #243b55);
+            color: #fff;
+            margin: 0;
+        }
+
+        .container {
+            padding: 60px 15px;
+            text-align: center;
+        }
+
+        .menu-item {
+            margin-bottom: 20px;
+            background-color: #2c3e50;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .menu-item:hover {
+            transform: scale(1.05);
+        }
+
+        .food-category {
+            background-color: #e74c3c;
+            font-size: 15px;
+            margin: 10px auto;
+            width: 20%;
+            border-radius: 5px;
+        }
+
+        .drink-category {
+            background-color: #3498db;
+            font-size: 15px;
+            margin: 10px auto;
+            width: 20%;
+            border-radius: 5px;
+        }
+
+        .menu-item h3 {
+            color: #17a2b8;
+        }
+
+        .custom-alert {
+            max-width: 500px;
+            margin: 10px auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2 class="mb-4">Menu Products</h2>
+
+        <div class="row">
+            <% dataMenu.forEach(menu=> { %>
+                <div class="col-md-4">
+                    <div class="menu-item">
+                        <h3>
+                            <%= menu.nama_menu %>
+                        </h3>
+                        <% if (menu.kategori==='Food' ) { %>
+                            <h4 class="food-category">Food</h4>
+                            <% } else if (menu.kategori==='Drink' ) { %>
+                                <h4 class="drink-category">Drink</h4>
+                                <% } else { %>
+                                    <h4 class="unknown-category">Unknown Category</h4>
+                                    <% } %>
+                                        <p>
+                                            <%= menu.deskripsi %>
+                                        </p>
+                                        <button class="btn btn-primary" onclick="addToCart('<%= menu.nama_menu %>')">Add
+                                            to Cart</button>
+                    </div>
+                </div>
+                <% }); %>
+        </div>
+
+        <a href="/" class="btn btn-primary mt-5">Back Home</a>
+    </div>
+
+    <div id="cartAlertContainer" class="fixed-top" style="top: 10px; right: 10px; z-index: 1000;"></div>
+
+    <script src="js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+
+    <script>
+        function addToCart(product) {
+            const alertMessage = `Berhasil ditambahkan ke cart shop: ${product}`;
+            const alertHTML = `
+                <div id="cartAlert" class="alert alert-success alert-dismissible fade show custom-alert" role="alert">
+                    ${alertMessage}
+                </div>
+            `;
+            const alertContainer = document.createElement('div');
+            alertContainer.innerHTML = alertHTML;
+
+            const cartAlertContainer = document.getElementById('cartAlertContainer');
+            cartAlertContainer.appendChild(alertContainer);
+
+            const cartAlert = alertContainer.firstChild;
+
+            setTimeout(() => {
+                alertContainer.remove();
+            }, 3000);
+        }
+
+    </script>
+</body>
+
+</html>

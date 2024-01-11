@@ -56,30 +56,46 @@
         <h2 class="mb-4">Cart Shop</h2>
 
         <ul id="cartItemList" class="list-group">
-            <li class="list-group-item">
-                <div>
-                    <h5 class="mb-1">Product Name 1</h5>
-                    <p class="mb-1">Jumlah: 2</p>
-                    <p class="mb-1">Harga: Rp. 20.000 / jml</p>
-                </div>
-                <span class="btn btn-danger">Remove</span>
-            </li>
+            <% cartList.forEach(cart=> { %>
+                <li id="item-<%= cart.item_id %>" class="list-group-item">
+                    <div>
+                        <h5 class="mb-1">
+                            <%= cart.nama_menu %>
+                        </h5>
+                        <p class="mb-1">Jumlah: <%= cart.quantity %>
+                        </p>
+                        <p class="mb-1">Harga: Rp. <%= cart.harga %> / jml</p>
+                    </div>
+                    <span class="btn btn-danger" onclick="removeItem('<%= cart.item_id %>')">Remove</span>
+                </li>
+                <% }) %>
         </ul>
-        <ul id="cartItemList" class="list-group">
-            <li class="list-group-item">
-                <div>
-                    <h5 class="mb-1">Product Name 1</h5>
-                    <p class="mb-1">Jumlah: 2</p>
-                    <p class="mb-1">Harga: Rp. 20.000 / jml</p>
-                </div>
-                <span class="btn btn-danger">Remove</span>
-            </li>
-        </ul>
-
-        <a href="/" class="btn btn-primary mt-5">Back Home</a>
+        <a href="/products" class="btn btn-primary mt-5">Back Menu</a>
     </div>
 
     <script src="/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+
+    <script>
+        function removeItem(item_id) {
+            fetch(`http://localhost:3000/remove-cart/${item_id}`, {
+                method: 'DELETE',
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        console.log('Gagal memghapus item dari keranjang!')
+                    }
+
+                    const cartItemToRemove = document.getElementById(`item-${item_id}`);
+                    if (cartItemToRemove) {
+                        cartItemToRemove.remove();
+                    }
+                })
+                .catch(e => {
+                    console.error(e)
+                })
+        }
+    </script>
 </body>
 
 </html>

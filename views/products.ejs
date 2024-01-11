@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <title>Menu Products</title>
     <style>
         body {
@@ -67,14 +68,26 @@
             margin: 10px auto;
             text-align: center;
         }
+
+        .cart-icon {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            z-index: 1001;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
 
+    <div class="cart-icon">
+        <a href="/cart-shop"><i class="fas fa-shopping-cart"></i></a>
+    </div>
     <div class="container">
         <h2 class="mb-4">Menu Products</h2>
-
         <div class="row">
             <% dataMenu.forEach(menu=> { %>
                 <div class="col-md-4">
@@ -92,7 +105,11 @@
                                         <p>
                                             <%= menu.deskripsi %>
                                         </p>
-                                        <button class="btn btn-cart" onclick="addToCart('<%= menu.nama_menu %>')">Add
+                                        <h5 class="mb-3">
+                                            Rp.<%= menu.harga %>
+                                        </h5>
+                                        <button class="btn btn-cart"
+                                            onclick="addToCart('<%= menu.nama_menu %>', '<%= menu.id %>', 1)">Add
                                             to Cart</button>
                     </div>
                 </div>
@@ -108,24 +125,46 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 
     <script>
-        function addToCart(product) {
-            const alertMessage = `Berhasil ditambahkan ke cart shop: ${product}`;
-            const alertHTML = `
-                <div id="cartAlert" class="alert alert-success alert-dismissible fade show custom-alert" role="alert">
-                    ${alertMessage}
-                </div>
-            `;
-            const alertContainer = document.createElement('div');
-            alertContainer.innerHTML = alertHTML;
+        function addToCart(product, product_id, quantity) {
+            //data yang akan dikirim
+            const data = {
+                product_id: product_id,
+                quantity: quantity
+            }
 
-            const cartAlertContainer = document.getElementById('cartAlertContainer');
-            cartAlertContainer.appendChild(alertContainer);
+            //fetch method post
+            fetch('http://localhost:3000/add-cart/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    const alertMessage = `Berhasil ditambahkan ke cart shop: ${product}`;
+                    const alertHTML = `
+                        <div id="cartAlert" class="alert alert-success alert-dismissible fade show custom-alert" role="alert">
+                            ${alertMessage}
+                        </div>
+                    `;
+                    const alertContainer = document.createElement('div');
+                    alertContainer.innerHTML = alertHTML;
 
-            const cartAlert = alertContainer.firstChild;
+                    const cartAlertContainer = document.getElementById('cartAlertContainer');
+                    cartAlertContainer.appendChild(alertContainer);
 
-            setTimeout(() => {
-                alertContainer.remove();
-            }, 3000);
+                    const cartAlert = alertContainer.firstChild;
+
+                    setTimeout(() => {
+                        alertContainer.remove();
+                    }, 3000);
+                })
+                .catch(e => {
+                    console.error(e)
+                })
+
+            //alert
         }
 
     </script>
